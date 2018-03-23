@@ -26,6 +26,12 @@ def main():
     subflame = pygame.image.load('images\\subflame.png').convert_alpha()
     rect_subflame = subflame.get_rect()
     rect_subflame.center = (360, 120)
+    batsu = pygame.image.load('images\\batsu.png').convert_alpha()
+    rect_batsu = batsu.get_rect()
+    rect_batsu.topleft = (115, 40)
+    batsu2 = pygame.image.load('images\\batsu.png').convert_alpha()
+    rect_batsu2 = batsu2.get_rect()
+    rect_batsu2.topleft = (160, 40)
     push_enter = pygame.image.load('images\\enter.png').convert_alpha()
     rect_push_enter = push_enter.get_rect()
     rect_push_enter.center = (200, 280)
@@ -71,6 +77,8 @@ def main():
         screen.blit(bg, rect_bg)
         screen.blit(flame, rect_flame)
         screen.blit(subflame, rect_subflame)
+        screen.blit(batsu, rect_batsu)
+        screen.blit(batsu2, rect_batsu2)
         screen.blit(stock1_puyo1, rect_stock1_puyo1)
         screen.blit(stock1_puyo2, rect_stock1_puyo2)
         screen.blit(stock2_puyo1, rect_stock2_puyo1)
@@ -134,22 +142,26 @@ def main():
                     if puyo_stack[r][(x1-25)//45] == 'None':
                         to_y1 = 480 - r*40
                         puyo_stack[r][(x1-25)//45] = drop_puyo1_color
+                        underground[(x1-25)//45] = 480 - (r+1)*40
                         break
                 for r in range(12):
                     if puyo_stack[r][(x2-25)//45] == 'None':
                         to_y2 = 480 - r*40
                         puyo_stack[r][(x1-25)//45] = drop_puyo2_color
+                        underground[(x2-25)//45] = 480 - (r+1)*40
                         break
             else:
                 for r in range(12):
                     if puyo_stack[r][(x2-25)//45] == 'None':
                         to_y2 = 480 - r*40
                         puyo_stack[r][(x1-25)//45] = drop_puyo2_color
+                        underground[(x2-25)//45] = 480 - (r+1)*40
                         break
                 for r in range(12):
                     if puyo_stack[r][(x1-25)//45] == 'None':
                         to_y1 = 480 - r*40
                         puyo_stack[r][(x1-25)//45] = drop_puyo1_color
+                        underground[(x1-25)//45] = 480 - (r+1)*40
                         break
             while y1 != to_y1 or y2 != to_y2:
                 if y1 != to_y1:
