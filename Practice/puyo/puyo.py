@@ -7,6 +7,13 @@ import random
 import os
 
 
+def load_image(imgname, fp):
+    filename = fp + '\\images\\' + imgname + '.png'
+    img_object = pygame.image.load(filename).convert_alpha()
+    rect_img_object = img_object.get_rect()
+    return img_object, rect_img_object
+
+
 def create_puyo():
     # 新規ぷよを作成する
     puyolist = ['None', 'red', 'blue', 'green', 'yellow', 'purple']
@@ -78,55 +85,34 @@ def main():
     pygame.init()  # 初期化
     screen = pygame.display.set_mode((400, 565))  # ウィンドウサイズの指定
     pygame.display.set_caption('ぷよぷよ')  # タイトルバー
-    filename = fp + '\\images\\bg.png'
-    bg = pygame.image.load(filename).convert_alpha()
-    rect_bg = bg.get_rect()
-    filename = fp + '\\images\\flame.png'
-    flame = pygame.image.load(filename).convert_alpha()
-    rect_flame = flame.get_rect()
+    bg, rect_bg = load_image('bg', fp)
+    flame, rect_flame = load_image('flame', fp)
     rect_flame.center = (160, 280)
-    filename = fp + '\\images\\subflame.png'
-    subflame = pygame.image.load(filename).convert_alpha()
-    rect_subflame = subflame.get_rect()
+    subflame, rect_subflame = load_image('subflame', fp)
     rect_subflame.center = (360, 120)
-    filename = fp + '\\images\\batsu.png'
-    batsu = pygame.image.load(filename).convert_alpha()
-    rect_batsu = batsu.get_rect()
+    batsu, rect_batsu = load_image('batsu', fp)
     rect_batsu.topleft = (115, 40)
-    batsu2 = pygame.image.load(filename).convert_alpha()
-    rect_batsu2 = batsu2.get_rect()
+    batsu2, rect_batsu2 = load_image('batsu', fp)
     rect_batsu2.topleft = (160, 40)
-    filename = fp + '\\images\\enter.png'
-    push_enter = pygame.image.load(filename).convert_alpha()
-    rect_push_enter = push_enter.get_rect()
+    push_enter, rect_push_enter = load_image('enter', fp)
     rect_push_enter.center = (200, 280)
-    filename = fp + '\\images\\over.png'
-    gameover = pygame.image.load(filename).convert_alpha()
-    rect_gameover = gameover.get_rect()
+    gameover, rect_gameover = load_image('over', fp)
     rect_gameover.center = (200, 280)
 
     # ぷよをストックに２つ作成
     puyo1, puyo2 = create_puyo()
-    filename = fp + '\\images\\'+puyo1+'.png'
-    stock1_puyo1 = pygame.image.load(filename).convert_alpha()
+    stock1_puyo1, rect_stock1_puyo1 = load_image(puyo1, fp)
     stock1_puyo1_color = puyo1
-    rect_stock1_puyo1 = stock1_puyo1.get_rect()
     rect_stock1_puyo1.center = (360, 55)
-    filename = fp + '\\images\\'+puyo2+'.png'
-    stock1_puyo2 = pygame.image.load(filename).convert_alpha()
+    stock1_puyo2, rect_stock1_puyo2 = load_image(puyo2, fp)
     stock1_puyo2_color = puyo2
-    rect_stock1_puyo2 = stock1_puyo2.get_rect()
     rect_stock1_puyo2.center = (360, 95)
     puyo1, puyo2 = create_puyo()
-    filename = fp + '\\images\\'+puyo1+'.png'
-    stock2_puyo1 = pygame.image.load(filename).convert_alpha()
+    stock2_puyo1, rect_stock2_puyo1 = load_image(puyo1, fp)
     stock2_puyo1_color = puyo1
-    rect_stock2_puyo1 = stock2_puyo1.get_rect()
     rect_stock2_puyo1.center = (360, 145)
-    filename = fp + '\\images\\'+puyo2+'.png'
-    stock2_puyo2 = pygame.image.load(filename).convert_alpha()
+    stock2_puyo2, rect_stock2_puyo2 = load_image(puyo2, fp)
     stock2_puyo2_color = puyo2
-    rect_stock2_puyo2 = stock2_puyo2.get_rect()
     rect_stock2_puyo2.center = (360, 185)
 
     game_start_flg = False
@@ -188,15 +174,11 @@ def main():
 
                 # ストック2を新たに作成
                 puyo1, puyo2 = create_puyo()
-                filename = fp + '\\images\\'+puyo1+'.png'
-                stock2_puyo1 = pygame.image.load(filename).convert_alpha()
+                stock2_puyo1, rect_stock2_puyo1 = load_image(puyo1, fp)
                 stock2_puyo1_color = puyo1
-                rect_stock2_puyo1 = stock2_puyo1.get_rect()
                 rect_stock2_puyo1.center = (360, 145)
-                filename = fp + '\\images\\'+puyo2+'.png'
-                stock2_puyo2 = pygame.image.load(filename).convert_alpha()
+                stock2_puyo2, rect_stock2_puyo2 = load_image(puyo2, fp)
                 stock2_puyo2_color = puyo2
-                rect_stock2_puyo2 = stock2_puyo2.get_rect()
                 rect_stock2_puyo2.center = (360, 185)
 
                 # 落ちぷよ中の判定へ
