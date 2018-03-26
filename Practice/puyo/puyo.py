@@ -115,6 +115,7 @@ def main():
     stock2_puyo2_color = puyo2
     rect_stock2_puyo2.center = (360, 185)
 
+    speed = 2
     game_start_flg = False
     game_over_flg = False
     puyo_drop_flg = False
@@ -192,8 +193,8 @@ def main():
 
                 # 落ちぷよを下へ移動
                 if y1 != ug[(x1-25)//45] and y2 != ug[(x2-25)//45]:
-                    y1 += 2
-                    y2 += 2
+                    y1 += speed
+                    y2 += speed
                 else:
                     puyo_drop_flg = False
         else:
@@ -244,9 +245,9 @@ def main():
             while y1 != to_y1 or y2 != to_y2:
                 pygame.time.Clock().tick(60)
                 if y1 != to_y1:
-                    y1 += 4
+                    y1 += speed + 2
                 if y2 != to_y2:
-                    y2 += 4
+                    y2 += speed + 2
                 rect_drop_puyo1.topleft = (x1, y1)
                 rect_drop_puyo2.topleft = (x2, y2)
                 screen.blit(flame, rect_flame)
@@ -285,6 +286,7 @@ def main():
                                 puyo_stack = drop_all(puyo_stack)
                                 pygame.time.delay(1000)
                                 stack_display(puyo_stack, fp, screen)
+                                pygame.time.delay(1000)
                                 flg = True
                                 break
                     if flg:
