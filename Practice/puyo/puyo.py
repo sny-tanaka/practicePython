@@ -7,9 +7,15 @@ import random
 import os
 
 
+def resource_path(relative):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(relative)
+
+
 def load_image(imgname, fp):
     filename = fp + '\\images\\' + imgname + '.png'
-    img_object = pygame.image.load(filename).convert_alpha()
+    img_object = pygame.image.load(resource_path(filename)).convert_alpha()
     rect_img_object = img_object.get_rect()
     return img_object, rect_img_object
 
@@ -147,7 +153,7 @@ def main():
 
     # スコアボード用フォントの作成
     score = 0
-    sysfont = pygame.font.SysFont(None, 28)
+    sysfont = pygame.font.SysFont('arial', 28)
 
     speed = 2
     game_start_flg = False
