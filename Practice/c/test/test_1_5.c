@@ -6,11 +6,11 @@ char *is_even_odd(int num)
     int d = num % 2;
     if (d == 0)
     {
-        return "偶数";
+        return (char *)"偶数";
     }
     else
     {
-        return "奇数";
+        return (char *)"奇数";
     }
 }
 
