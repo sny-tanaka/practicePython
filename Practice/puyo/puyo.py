@@ -20,6 +20,13 @@ def load_image(imgname, fp):
     return img_object, rect_img_object
 
 
+def sound_chain_select(chain, fp):
+    if chain > 8:
+        chain = 7
+    sound_chain = pygame.mixer.Sound(fp+'\\sound\\chain'+str(chain)+'.wav')
+    sound_chain.play()
+
+
 def create_puyo():
     # 新規ぷよを作成する
     puyolist = ['None', 'red', 'blue', 'green', 'yellow', 'purple']
@@ -153,7 +160,16 @@ def main():
 
     # スコアボード用フォントの作成
     score = 0
-    sysfont = pygame.font.SysFont('arial', 28)
+    sysfont = pygame.font.SysFont('arial', 20)
+
+    # BGMの設定
+    pygame.mixer.music.load(fp+'\\sound\\bgm.mp3')
+    pygame.mixer.music.play(-1)
+
+    # 効果音の設定
+    sound_spin = pygame.mixer.Sound(fp+'\\sound\\spin.wav')
+    sound_drop = pygame.mixer.Sound(fp+'\\sound\\drop.wav')
+    sound_move = pygame.mixer.Sound(fp+'\\sound\\move.wav')
 
     speed = 2
     game_start_flg = False
@@ -246,6 +262,7 @@ def main():
                         y2 += 1
                     else:
                         puyo_drop_flg = False
+                        sound_drop.play()
                         break
         else:
             if game_over_flg:
@@ -304,6 +321,7 @@ def main():
                 screen.blit(drop_puyo1, rect_drop_puyo1)
                 screen.blit(drop_puyo2, rect_drop_puyo2)
                 pygame.display.update()
+            sound_drop.play()
             puyo_stack[r1][c1] = drop_puyo1_color
             puyo_stack[r2][c2] = drop_puyo2_color
 
@@ -325,6 +343,7 @@ def main():
                     stack_display(puyo_stack, fp, screen, on_flame)
                     make_score_board(score, sysfont, screen)
                     pygame.display.update()
+                    sound_chain_select(chain, fp)
                     pygame.time.delay(500)
 
                     puyo_stack = bomb2none(puyo_stack)
@@ -335,6 +354,7 @@ def main():
                     puyo_stack = drop_all(puyo_stack)
                     stack_display(puyo_stack, fp, screen, on_flame)
                     pygame.display.update()
+                    sound_drop.play()
                     pygame.time.delay(200)
 
         # 下矢印押しっぱなしでぷよ加速
@@ -359,30 +379,40 @@ def main():
                     if event.key == K_SPACE:
                         # 下にある場合左へ
                         if y2 - y1 == 40 and x1 != 25:
-                            y2 = y1
-                            x2 = x1-45
+                            if ug[((x1-25)//45)-1]-40 > y1:
+                                y2 = y1
+                                x2 = x1-45
+                                sound_spin.play()
                         # 左にある場合上へ
                         elif x1 - x2 == 45:
                             x2 = x1
                             y2 = y1-40
+                            sound_spin.play()
                         # 上にある場合右へ
                         elif y1 - y2 == 40 and x1 != 250:
-                            y2 = y1
-                            x2 = x1+45
+                            if ug[((x1-25)//45)+1] > y1:
+                                y2 = y1
+                                x2 = x1+45
+                                sound_spin.play()
                         # 右にある場合下へ
                         elif x2 - x1 == 45 and y1 < ug[(x1-25)//45]-40:
                             x2 = x1
                             y2 = y1+40
+                            sound_spin.play()
                     if event.key == K_LEFT:
                         # ぷよを1マス左へ移動
                         if x1 != 25 and x2 != 25:
-                            x1 -= 45
-                            x2 -= 45
+                            if y1 < ug[((x1-25)//45)-1] and y2 < ug[((x2-25)//45)-1]:
+                                x1 -= 45
+                                x2 -= 45
+                                sound_move.play()
                     if event.key == K_RIGHT:
                         # ぷよを1マス右へ移動
                         if x1 != 250 and x2 != 250:
-                            x1 += 45
-                            x2 += 45
+                            if y1 < ug[((x1-25)//45)+1] and y2 < ug[((x2-25)//45)+1]:
+                                x1 += 45
+                                x2 += 45
+                                sound_move.play()
                     if event.key == K_UP:
                         # ぷよを一瞬で真下に落とす
                         if y1 != ug[(x1-25)//45] and y2 != ug[(x2-25)//45]:
