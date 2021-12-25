@@ -379,7 +379,7 @@ def main():
                     if event.key == K_SPACE:
                         # 下にある場合左へ
                         if y2 - y1 == 40 and x1 != 25:
-                            if ug[((x1-25)//45)-1]-40 > y1:
+                            if ug[((x1-25)//45)-1]-40 > y1 and y1 < ug[((x1-25)//45)-1] and y2 < ug[((x2-25)//45)-1]:
                                 y2 = y1
                                 x2 = x1-45
                                 sound_spin.play()
@@ -390,7 +390,7 @@ def main():
                             sound_spin.play()
                         # 上にある場合右へ
                         elif y1 - y2 == 40 and x1 != 250:
-                            if ug[((x1-25)//45)+1] > y1:
+                            if ug[((x1-25)//45)+1] > y1 and y1 < ug[((x1-25)//45)+1] and y2 < ug[((x2-25)//45)+1]:
                                 y2 = y1
                                 x2 = x1+45
                                 sound_spin.play()
@@ -432,4 +432,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print("Execute")
     main()
