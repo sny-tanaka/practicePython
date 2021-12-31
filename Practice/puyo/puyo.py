@@ -372,7 +372,13 @@ def main():
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_RETURN:
+                if event.key == K_RETURN and not game_start_flg:
+                    if game_over_flg:
+                        score = 0
+                        puyo_stack = []
+                        for i in range(13):
+                            puyo_stack.append(['None', 'None', 'None', 'None', 'None', 'None'])
+                        game_over_flg = False
                     game_start_flg = True
                 if puyo_drop_flg:
                     # ぷよの回転
