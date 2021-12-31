@@ -177,7 +177,7 @@ def main():
     puyo_drop_flg = False
     ug = [480, 480, 480, 480, 480, 480]
     puyo_stack = []
-    for i in range(12):
+    for i in range(13):
         puyo_stack.append(['None', 'None', 'None', 'None', 'None', 'None'])
 
     while(True):
@@ -223,7 +223,7 @@ def main():
                 drop_puyo2 = stock1_puyo2
                 drop_puyo2_color = stock1_puyo2_color
                 rect_drop_puyo2 = drop_puyo2.get_rect()
-                x1, y1 = 115, 20
+                x1, y1 = 115, -20
                 x2, y2 = x1, y1+40
 
                 # ストック2をストック1へ移動
